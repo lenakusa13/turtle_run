@@ -1,0 +1,14 @@
+{
+  "brano": {
+    "level": 2,
+    "seagulls": 17
+  },
+  "lena": {
+    "level": 6,
+    "seagulls": 72
+  },
+  "a": {
+    "level": 5,
+    "seagulls": 60
+  }
+}
