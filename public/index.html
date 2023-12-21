@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turtle Run</title>
+    <script src="phaser.min.js"></script>
+    <script src="turtle_run.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: 'block';
+            justify-content: center;
+            align-items: center;
+            background-color: #fff; /* or any color of your choice */
+        }
+        #backgroundImage {
+            width: 800px;
+            height: 800px;
+            background-image: url('images/intro_image.jpg'); /* Replace with your image path */
+            background-size: cover;
+            display: flex;
+        }
+        #nameInputContainer {
+            position: absolute;
+            top: 660px;
+            left: 180px;
+            display: none;
+            background-color: rgba(200, 200, 200, 0.85); /* Transparent grey background */
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+        }
+        #nameInputContainer p, #nameInputContainer input, #nameInputContainer button {
+            display: inline; /* Align elements in a line */
+            margin: 0 5px;
+        }
+        /* Styles for Control Buttons */
+        .control-button {
+            position: fixed;
+            bottom: 90px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            user-select: none;
+            z-index: 10;
+        }
+        .arrow-left, .arrow-right, .c-button {
+            background-size: contain; /* Adjust to contain to show the whole image */
+            background-repeat: no-repeat; /* Prevent image repeating */
+            background-position: center; /* Center the image vertically and horizontally */
+        }
+        .arrow-left {
+            left: 20px;
+            background-image: url('images/left_arrow.jpg');
+        }
+        .arrow-right {
+            left: 720px;
+            background-image: url('images/right_arrow.jpg');
+        }
+        .c-button {
+            left: 390px; 
+            background-image: url('images/jetpack_cat.png');
+        }
+    </style>
+</head>
+<body>
+    <div id="backgroundImage"></div>
+    <div id="nameInputContainer">
+        <p>Please enter your name:</p>
+        <input type="text" id="nameInput">
+        <button onclick="startGame()">Start Game</button>
+    </div>
+    <!-- Control Buttons -->
+    <div id="leftButton" class="control-button arrow-left" ontouchstart="startMovingLeft()" ontouchstop="stopMoving()" onclick="moveLeft()"></div>
+    <div id="rightButton" class="control-button arrow-right" ontouchstart="startMovingLeft()" ontouchstop="stopMoving()" onclick="moveRight()"></div>
+    <div id="centerButton" class="control-button c-button" onclick="handleCPress()"></div>
+    
+
+    <script>
+        setTimeout(() => {
+            document.getElementById('nameInputContainer').style.display = 'block';
+        }, 1000);
+
+        function startGame() {
+            const name = document.getElementById('nameInput').value.trim();
+            if (name) {
+                document.getElementById('backgroundImage').style.display = 'none';
+                document.getElementById('nameInputContainer').style.display = 'none';
+                TurtleRunGame.start(name);
+            }
+        }
+    </script>
+</body>
+</html>
