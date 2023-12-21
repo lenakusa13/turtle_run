@@ -250,7 +250,7 @@ function nextLevel(scene) {
     resetVars(level+1);
 
     let introImage = scene.add.image(scene.sys.canvas.width / 2, scene.sys.canvas.height / 2, 'intro');
-    let levelText = scene.add.text(scene.sys.canvas.width / 2, scene.sys.canvas.height - 150, 'Prepare for level: ' + level, { fontSize: '32px', align: 'center', fill: '#C1423F' }).setOrigin(0.5);
+    let levelText = scene.add.text(scene.sys.canvas.width / 2, scene.sys.canvas.height - 80, 'Prepare for level: ' + level, { fontSize: '32px', align: 'center', fill: '#C1423F' }).setOrigin(0.5);
 
     // Set a timer to remove the image and text after 3 seconds
     scene.time.delayedCall(3000, () => {
