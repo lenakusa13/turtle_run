@@ -72,7 +72,7 @@ var seagulls_avoided = 0;
 var total_seagulls_avoided = 0;
 var remaining_seagulls = 10;
 var remaining_pelicans = remaining_seagulls
-var num_jetpack_cats = 10;
+var num_jetpack_cats = 0;
 var jetpack_cat_flying_time = 0;
 var cursors;
 var infoText;
@@ -492,6 +492,12 @@ function resizeButtons() {
     const canvas = TurtleRunGame.game.canvas;
     const width = canvas.width;
     const height = canvas.height;
+    let auxOffLeft = 0;
+    let auxOffRight = 0;
+    if (canvas.offsetLeft>40){
+        auxOffLeft=-60;
+        auxOffRight=+60;
+    }
 
     // Assuming buttons are HTML elements
     const leftButton = document.getElementById('leftButton');
@@ -499,14 +505,14 @@ function resizeButtons() {
     const centerButton = document.getElementById('centerButton');
 
     // Position the buttons at the bottom of the canvas
-    leftButton.style.left = `${canvas.offsetLeft + 20}px`; // 20px from the left edge
+    leftButton.style.left = `${canvas.offsetLeft + auxOffLeft + 20}px`; // 20px from the left edge
     leftButton.style.bottom = `${canvas.offsetTop + 5}px`; // 20px from the bottom edge
 
-    rightButton.style.left = `${canvas.offsetLeft + canvas.offsetWidth - 60}px`; // 20px from the right edge
+    rightButton.style.left = `${canvas.offsetLeft + canvas.offsetWidth + auxOffRight - 60}px`; // 20px from the right edge
     rightButton.style.bottom = `${canvas.offsetTop + 5}px`;
 
-    centerButton.style.left = `${canvas.offsetLeft + canvas.offsetWidth/2 -25}px`; // Centered
-    centerButton.style.bottom = `${canvas.offsetTop + 5}px`;
+    centerButton.style.left = `${canvas.offsetLeft + canvas.offsetWidth + auxOffRight - 60}px`; // Centered
+    centerButton.style.bottom = `${canvas.offsetTop + 45}px`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
