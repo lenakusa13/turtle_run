@@ -19,12 +19,14 @@ var TurtleRunGame = {
     game: null,
 
     start: function(userName) {
-        if (this.game === null) {
-            document.getElementById('leftButton').style.display = 'flex';
-            document.getElementById('rightButton').style.display = 'flex';
-    
+        if (this.game === null) {    
             this.game = new Phaser.Game(config);
             this.game.userName = userName; // Pass the userName to the game
+            this.game.scale.on('resize', resizeButtons);
+
+            resizeButtons();
+            document.getElementById('leftButton').style.display = 'flex';
+            document.getElementById('rightButton').style.display = 'flex';
         } else {
             let defaultScene = this.game.scene.getScenes(true)[0]; // Accesses the currently running scene
             resetVars(1);
@@ -37,6 +39,10 @@ var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 800,
+    scale: {
+        mode: Phaser.Scale.FIT, // Scale the game to fit the parent container
+        autoCenter: Phaser.Scale.CENTER_BOTH // Center the game horizontally and vertically
+    },
     physics: {
         default: 'arcade',
         arcade: {
@@ -66,7 +72,7 @@ var seagulls_avoided = 0;
 var total_seagulls_avoided = 0;
 var remaining_seagulls = 10;
 var remaining_pelicans = remaining_seagulls
-var num_jetpack_cats = 0;
+var num_jetpack_cats = 10;
 var jetpack_cat_flying_time = 0;
 var cursors;
 var infoText;
@@ -136,10 +142,10 @@ function createPelican(scene, level) {
 }
 
 function createJetpackCat() {
-    let screen_height =  800;
+    let screen_height =  TurtleRunGame.game.config.height;
     var x = 0;
-    var y = Phaser.Math.Between(screen_height/3, screen_height*2/3);
-    var dx = 300;
+    var y = Phaser.Math.Between(screen_height*.4, screen_height*.6);
+    var dx = screen_height/3;
     var dy = 0;
     var jetpack_cat = jetpack_cats.create(x, y, 'jetpack_cat').setScale(0.35);
     jetpack_cat.setVelocity(dx,dy);
@@ -480,6 +486,27 @@ function handleCPress() {
         createJetpackCat();
         TurtleRunGame.game.sound.play('meow');
     }
+}
+
+function resizeButtons() {
+    const canvas = TurtleRunGame.game.canvas;
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Assuming buttons are HTML elements
+    const leftButton = document.getElementById('leftButton');
+    const rightButton = document.getElementById('rightButton');
+    const centerButton = document.getElementById('centerButton');
+
+    // Position the buttons at the bottom of the canvas
+    leftButton.style.left = `${canvas.offsetLeft + 20}px`; // 20px from the left edge
+    leftButton.style.bottom = `${canvas.offsetTop + 5}px`; // 20px from the bottom edge
+
+    rightButton.style.left = `${canvas.offsetLeft + canvas.offsetWidth - 60}px`; // 20px from the right edge
+    rightButton.style.bottom = `${canvas.offsetTop + 5}px`;
+
+    centerButton.style.left = `${canvas.offsetLeft + canvas.offsetWidth/2 -25}px`; // Centered
+    centerButton.style.bottom = `${canvas.offsetTop + 5}px`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
